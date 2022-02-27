@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios, { AxiosResponse } from 'axios'
+import Photo from './components/Photo'
+
+export interface State {
+    url:string
+}
 
 function App(): JSX.Element {
 
-  interface State {
-      url:string
-  }
-
   const [ photo,setPhoto ] = useState<State>({url:''})
-
 
   const getData = async (): Promise<void> => {
     await axios.get('https://api.nasa.gov/planetary/apod?api_key=9Gu6cwgUJreObBRGtdgrrcFBNRpQzuo4NJjiuPKc')
@@ -24,7 +24,7 @@ function App(): JSX.Element {
 
   return (
     <div>
-      <p>{photo.url}</p>
+      <Photo url = {photo.url}/>
     </div>
   );
 }
