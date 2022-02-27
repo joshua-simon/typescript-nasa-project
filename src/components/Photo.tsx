@@ -1,7 +1,7 @@
 import {FC} from 'react'
 import {State} from '../App'
 
-const Photo:FC<State>= ({url}):JSX.Element  => {
+const Photo:FC<State> = ({url}):JSX.Element  => {
     
     return(
         <div>
