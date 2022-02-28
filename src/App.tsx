@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios, { AxiosResponse } from 'axios'
 import Photo from './components/Photo'
+import './styles.css'
 
 export interface IPhoto {
     copyright:string,
@@ -52,6 +53,8 @@ function App():JSX.Element {
 
   return (
     <div>
+      <h1>Nasa: Astronomy photo of the day!</h1>
+      <div className='inputs'>
       <label>
         Enter start date
         <input type = 'date' name = 'startDate' onChange={handleChange} value = {startDate}/>
@@ -60,7 +63,10 @@ function App():JSX.Element {
         Enter end date
         <input type = 'date' name ='endDate' onChange={handleChange} value = {endDate}/>
       </label>
+      </div>
+      <div className='photos'>
       {photos.length && photos.map((photo,index) => <Photo key = {index} photo = {photo}/>)}
+      </div>
     </div>
   );
 }

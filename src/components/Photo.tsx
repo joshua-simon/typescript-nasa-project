@@ -4,7 +4,7 @@ import {IPhotoComponent} from '../App'
 const Photo:FC<IPhotoComponent> = ({children, photo}):JSX.Element  => {
     
     return(
-        <div>
+        <div className='photo'>
             <img src = {photo.url} />
         </div>
     )
