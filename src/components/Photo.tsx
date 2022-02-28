@@ -1,13 +1,14 @@
 import {FC} from 'react'
-import {State} from '../App'
+import {IPhotoComponent} from '../App'
 
-const Photo:FC<State> = ({url}):JSX.Element  => {
+const Photo:FC<IPhotoComponent> = ({children, photo}):JSX.Element  => {
     
     return(
         <div>
-            <img src = {url}/>
+            <img src = {photo.url} />
         </div>
     )
 }
 
 export default Photo
+

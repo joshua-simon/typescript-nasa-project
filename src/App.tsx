@@ -2,22 +2,35 @@ import React, { useEffect, useState } from 'react';
 import axios, { AxiosResponse } from 'axios'
 import Photo from './components/Photo'
 
-export interface State {
+export interface IPhoto {
+    copyright:string,
+    date:string,
+    explanation:string,
+    hdurl:string,
+    media_type:string,
+    service_version:string,
+    title:string,
     url:string
 }
 
-interface DateState {
+export interface IPhotoComponent{
+  photo:IPhoto;
+}
+
+export interface DateRange {
   startDate:string,
   endDate:string
 }
 
+export type PhotosApiPayLoad = IPhoto[]
+
 function App():JSX.Element {
 
-  const [ photo,setPhoto ] = useState<State>({url:''})
-  const [ {startDate, endDate}, setDate ] = useState<DateState>({startDate:'',endDate:''})
+  const [ photos,setPhoto ] = useState<IPhoto[]>([])
+  const [ {startDate, endDate}, setDate ] = useState<DateRange>({startDate:'',endDate:''})
 
   const getData = async (): Promise<void> => {
-    await axios.get('https://api.nasa.gov/planetary/apod?api_key=9Gu6cwgUJreObBRGtdgrrcFBNRpQzuo4NJjiuPKc&start_date=2022-01-01&end_date=2022-02-01')
+    await axios.get<PhotosApiPayLoad>(`https://api.nasa.gov/planetary/apod?api_key=9Gu6cwgUJreObBRGtdgrrcFBNRpQzuo4NJjiuPKc&start_date=${startDate}&end_date=${endDate}`)
     .then((response: AxiosResponse) => {
       setPhoto(response.data)
     })
@@ -25,12 +38,8 @@ function App():JSX.Element {
 
   useEffect(() => {
     getData()
-  },[])
+  },[startDate,endDate])
 
-  interface FormData {
-    startDate: string,
-    endDate:string
-  }
 
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>):void => {
     e.preventDefault()
@@ -40,8 +49,6 @@ function App():JSX.Element {
       [name]: value
     }))
   }
-
-  console.log(`start date: ${startDate} end date: ${endDate}`)
 
   return (
     <div>
@@ -53,7 +60,7 @@ function App():JSX.Element {
         Enter end date
         <input type = 'date' name ='endDate' onChange={handleChange} value = {endDate}/>
       </label>
-      <Photo url = {photo.url}/>
+      {photos.length && photos.map((photo,index) => <Photo key = {index} photo = {photo}/>)}
     </div>
   );
 }
