@@ -21,7 +21,9 @@ const PhotoDetails:FC= ():JSX.Element => {
 
     return(
         <div>
-            <p>{state.url}</p>
+            <h1>{photoDetails?.title}</h1>
+            <h2>{photoDetails?.copyright}</h2>
+            <p>{photoDetails?.explanation}</p>
         </div>
     )
 }
