@@ -1,18 +1,27 @@
-import React, {FC} from 'react'
-import { useParams, Params } from 'react-router-dom'
+import React, {FC, useState, useEffect} from 'react'
+import { useParams, useLocation} from 'react-router-dom'
+import {IPhoto} from './Main'
 
-const PhotoDetails:FC = ():JSX.Element => {
+const PhotoDetails:FC= ():JSX.Element => {
+
+    const [ photoDetails,setPhotoDetails ] = useState<IPhoto>()
 
     type PhotoParams = {
         id:string
     }
-    
+
     const {id} = useParams<PhotoParams>()
-    console.log(`this is id: ${id}`)
+    
+    const {state} = useLocation() as any
+    //this needs to be assigned a type other than 'any'
+
+    useEffect(() => {
+        setPhotoDetails(state)
+    },[])
 
     return(
         <div>
-            this is photo details
+            <p>{state.url}</p>
         </div>
     )
 }
